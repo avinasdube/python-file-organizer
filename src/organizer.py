@@ -4,6 +4,8 @@ import shutil
 from scanner import scan_directory
 from classifier import get_file_category
 
+from exceptions import InvalidDirectoryError
+
 def create_category_directory(base_dir: Path, category: str) -> Path:
     """Create and return the directory for a file category."""
     category_directory = base_dir / category
@@ -27,10 +29,19 @@ def move_file(file: Path, destination_directory: Path) -> None:
 
 def organize_directory(directory: Path) -> None:
     """Organize files in the given directory."""
+    if not directory.exists():
+        raise InvalidDirectoryError("Directory does not exist.")
+
+    if not directory.is_dir():
+        raise InvalidDirectoryError("Path is not a directory.")
+
     files = scan_directory(directory)
     for file in files:
         category = get_file_category(file)
         category_directory = create_category_directory(directory, category)
         move_file(file, category_directory)
 
-organize_directory(Path("downloads"))
+try:
+    organize_directory(Path("downloads/photo.jpg"))
+except InvalidDirectoryError as error:
+    print(f"Error: {error}")
