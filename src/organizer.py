@@ -1,10 +1,10 @@
 from pathlib import Path
 import shutil
 
-from scanner import scan_directory
-from classifier import get_file_category
+from src.scanner import scan_directory
+from src.classifier import get_file_category
 
-from exceptions import InvalidDirectoryError, FileOrganizationError
+from src.exceptions import InvalidDirectoryError, FileOrganizationError
 
 
 def create_category_directory(base_dir: Path, category: str) -> Path:
@@ -48,9 +48,10 @@ def organize_directory(directory: Path) -> None:
         category_directory = create_category_directory(directory, category)
         move_file(file, category_directory)
 
-try:
-    organize_directory(Path("downloads"))
-except InvalidDirectoryError as error:
-    print(f"Error: {error}")
-except FileOrganizationError as error:
-    print (f"Error: {error}")
+if __name__ == "__main__":
+    try:
+        organize_directory(Path("downloads"))
+    except InvalidDirectoryError as error:
+        print(f"Error: {error}")
+    except FileOrganizationError as error:
+        print (f"Error: {error}")
