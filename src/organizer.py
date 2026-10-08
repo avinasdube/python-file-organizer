@@ -4,12 +4,16 @@ import shutil
 from scanner import scan_directory
 from classifier import get_file_category
 
-from exceptions import InvalidDirectoryError
+from exceptions import InvalidDirectoryError, FileOrganizationError
+
 
 def create_category_directory(base_dir: Path, category: str) -> Path:
     """Create and return the directory for a file category."""
     category_directory = base_dir / category
-    category_directory.mkdir(exist_ok=True)
+    try:
+        category_directory.mkdir(exist_ok=True)
+    except OSError as error:
+        raise FileOrganizationError(f"Could not create directory '{category_directory}'.") from error
     return category_directory
 
 def get_unique_destination(file: Path, destination_directory: Path) -> Path:
@@ -25,7 +29,10 @@ def get_unique_destination(file: Path, destination_directory: Path) -> Path:
 def move_file(file: Path, destination_directory: Path) -> None:
     """Move a file to the specified destination directory."""
     unique_dest = get_unique_destination(file, destination_directory)
-    shutil.move(file, unique_dest)
+    try:
+        shutil.move(file, unique_dest)
+    except OSError as error:
+        raise FileOrganizationError(f"Could not move '{file}' to '{unique_dest}'.") from error
 
 def organize_directory(directory: Path) -> None:
     """Organize files in the given directory."""
@@ -42,6 +49,8 @@ def organize_directory(directory: Path) -> None:
         move_file(file, category_directory)
 
 try:
-    organize_directory(Path("downloads/photo.jpg"))
+    organize_directory(Path("downloads"))
 except InvalidDirectoryError as error:
     print(f"Error: {error}")
+except FileOrganizationError as error:
+    print (f"Error: {error}")
