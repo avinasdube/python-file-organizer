@@ -1,5 +1,5 @@
 from pathlib import Path
-from src.classifier import get_category, get_file_category
+from file_organizer.classifier import get_category, get_file_category
 
 def test_jpg_is_image():
     assert get_category(".jpg") == "Images"

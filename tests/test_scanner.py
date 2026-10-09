@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.scanner import scan_directory
+from file_organizer.scanner import scan_directory
 
 def test_scan_directory_finds_files(tmp_path):
     test_file = tmp_path / "photo.jpg"
