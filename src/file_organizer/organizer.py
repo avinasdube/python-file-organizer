@@ -1,10 +1,10 @@
 from pathlib import Path
 import shutil
 
-from src.scanner import scan_directory
-from src.classifier import get_file_category
+from file_organizer.scanner import scan_directory
+from file_organizer.classifier import get_file_category
 
-from src.exceptions import InvalidDirectoryError, FileOrganizationError
+from file_organizer.exceptions import InvalidDirectoryError, FileOrganizationError
 
 
 def create_category_directory(base_dir: Path, category: str) -> Path:

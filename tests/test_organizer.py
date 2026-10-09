@@ -1,5 +1,5 @@
-from src.organizer import organize_directory, get_unique_destination
-from src.exceptions import InvalidDirectoryError
+from file_organizer.organizer import organize_directory, get_unique_destination
+from file_organizer.exceptions import InvalidDirectoryError
 
 import pytest
 
