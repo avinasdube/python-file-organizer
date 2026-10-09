@@ -7,5 +7,8 @@ name = "python-file-organizer"
 version = "0.1.0"
 description = "A CLI tool for organizing files by category"
 
+[project.scripts]
+file-organizer = "file_organizer.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
